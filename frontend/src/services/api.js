@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const API_URL = import.meta.env.VITE_API_URL || 'https://irenk-backend.onrender.com/api';
 
 export const getSessions = async () => {
   const res = await fetch(`${API_URL}/sessions`);
