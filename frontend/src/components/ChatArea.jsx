@@ -43,7 +43,7 @@ export function ChatArea({ messages, isLoading, bottomRef }) {
           <ChatBubble key={msg._id || index} role={msg.role} content={msg.content} createdAt={msg.createdAt} />
         ))}
         {isLoading && <TypingIndicator />}
-        <div ref={bottomRef} className="h-4" />
+        <div ref={bottomRef} className="h-8 md:h-4 pb-[env(safe-area-inset-bottom)]" />
       </div>
     </div>
   )

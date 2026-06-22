@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { MessageSquare, Plus, Trash2 } from "lucide-react"
+import { MessageSquare, Plus, Trash2, Sun, Moon } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -7,7 +7,7 @@ import { IrenkLogo } from "./IrenkLogo"
 
 const MySwal = withReactContent(Swal)
 
-export function Sidebar({ sessions, activeSession, onSelectSession, onCreateSession, onDeleteSession }) {
+export function Sidebar({ sessions, activeSession, onSelectSession, onCreateSession, onDeleteSession, theme, onToggleTheme }) {
   const handleDelete = (id, e) => {
     e.stopPropagation();
     MySwal.fire({
@@ -81,6 +81,17 @@ export function Sidebar({ sessions, activeSession, onSelectSession, onCreateSess
             Belum ada riwayat obrolan.
           </motion.div>
         )}
+      </div>
+
+      <div className="mt-4 pt-4 border-t border-border/50">
+        <Button 
+          variant="ghost" 
+          className="w-full justify-start gap-3 text-muted-foreground hover:text-foreground hover:bg-muted"
+          onClick={onToggleTheme}
+        >
+          {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+          <span>{theme === 'dark' ? 'Mode Terang' : 'Mode Gelap'}</span>
+        </Button>
       </div>
     </div>
   )

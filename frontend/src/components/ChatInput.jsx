@@ -32,7 +32,7 @@ export function ChatInput({ onSendMessage, disabled }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <form onSubmit={handleSubmit} className="p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="max-w-3xl mx-auto relative flex items-end bg-muted/50 rounded-2xl border border-muted-foreground/20 p-2 shadow-sm focus-within:ring-1 focus-within:ring-ring transition-all">
         <textarea 
           ref={textareaRef}
@@ -41,7 +41,7 @@ export function ChatInput({ onSendMessage, disabled }) {
           onKeyDown={handleKeyDown}
           onInput={handleInput}
           placeholder="Tanya Irenk sesuatu..." 
-          className="w-full bg-transparent resize-none border-0 focus:ring-0 focus:outline-none px-3 py-2 text-sm max-h-[150px] min-h-[40px] scrollbar-thin"
+          className="w-full bg-transparent resize-none border-0 focus:ring-0 focus:outline-none px-3 py-2 text-base md:text-sm max-h-[150px] min-h-[44px] scrollbar-thin"
           disabled={disabled}
           rows={1}
         />

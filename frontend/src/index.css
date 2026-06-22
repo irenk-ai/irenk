@@ -69,24 +69,24 @@
     --radius: 0.5rem;
   }
   .dark {
-    --background: 0 0% 5%;
+    --background: 240 10% 10%;
     --foreground: 0 0% 98%;
-    --card: 0 0% 7%;
+    --card: 240 10% 12%;
     --card-foreground: 0 0% 98%;
-    --popover: 0 0% 7%;
+    --popover: 240 10% 12%;
     --popover-foreground: 0 0% 98%;
     --primary: 250 100% 70%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 12%;
+    --secondary: 240 10% 16%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 240 10% 16%;
+    --muted-foreground: 240 5% 65%;
     --accent: 250 100% 70%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
+    --border: 240 10% 20%;
+    --input: 240 10% 20%;
     --ring: 250 100% 70%;
   }
 }
@@ -98,6 +98,10 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Plus Jakarta Sans', sans-serif;
+    background-image: 
+      radial-gradient(at 0% 0%, hsla(250, 100%, 70%, 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, hsla(280, 100%, 70%, 0.05) 0px, transparent 50%);
+    background-attachment: fixed;
   }
 }
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Sidebar } from './components/Sidebar'
 import { ChatArea } from './components/ChatArea'
 import { ChatInput } from './components/ChatInput'
@@ -12,38 +12,54 @@ function App() {
   const [sessions, setSessions] = useState([])
   const [activeSession, setActiveSession] = useState(null)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('irenk_theme') || 'dark'
+  })
 
-  const { messages, isLoading, error, sendMessage, bottomRef } = useChat(activeSession)
+  const { messages, isLoading, sendMessage, bottomRef } = useChat(activeSession)
 
   useEffect(() => {
-    // Add dark class to html to enforce dark mode as requested
-    document.documentElement.classList.add('dark')
-    loadSessions()
-  }, [])
-
-  async function loadSessions() {
-    try {
-      const data = await api.getSessions()
-      setSessions(data)
-      setActiveSession(prev => {
-        if (!prev && data.length > 0) return data[0];
-        return prev;
-      })
-    } catch (err) {
-      console.error(err)
+    // Apply theme
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
     }
-  }
+    localStorage.setItem('irenk_theme', theme)
+  }, [theme])
 
-  const handleCreateSession = async () => {
+  // Membungkus handleCreateSession dengan useCallback
+  const handleCreateSession = useCallback(async () => {
     try {
       const newSession = await api.createSession()
-      setSessions([newSession, ...sessions])
+      setSessions(prev => [newSession, ...prev])
       setActiveSession(newSession)
       if (window.innerWidth < 768) setIsSidebarOpen(false)
     } catch (err) {
       console.error(err)
     }
-  }
+  }, [])
+
+  // Membungkus loadSessions dengan useCallback
+  const loadSessions = useCallback(async () => {
+    try {
+      const data = await api.getSessions()
+      if (data.length > 0) {
+        setSessions(data)
+        setActiveSession(prev => prev || data[0])
+      } else {
+        // Auto-generate session if none exists
+        handleCreateSession()
+      }
+    } catch (err) {
+      console.error(err)
+    }
+  }, [handleCreateSession]) // Memasukkan dependency yang dipakai di dalam loadSessions
+
+  // useEffect sekarang aman menggunakan loadSessions sebagai dependency
+  useEffect(() => {
+    loadSessions()
+  }, [loadSessions])
 
   const handleDeleteSession = async (id) => {
     try {
@@ -104,6 +120,8 @@ function App() {
           }}
           onCreateSession={handleCreateSession}
           onDeleteSession={handleDeleteSession}
+          theme={theme}
+          onToggleTheme={() => setTheme(prev => prev === 'dark' ? 'light' : 'dark')}
         />
       </div>
 
